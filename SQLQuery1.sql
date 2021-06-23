@@ -37,7 +37,11 @@ ON p.PropertyId = tp.PropertyId
 RIGHT JOIN [TenantPaymentFrequencies] AS tpf
 ON p.FrequencyType = tpf.Id
 WHERE o.OwnerId = '1426'
-GROUP BY p.PropertyId
+GROUP BY p.PropertyId,
+	tp.PaymentAmount,
+	tpf.name,
+	tp.StartDate,
+	tp.EndDate
 
 
 
