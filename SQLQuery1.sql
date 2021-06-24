@@ -20,7 +20,7 @@ ON p.PropertyId = o.PropertyId
 WHERE o.OwnerId = '1426'
 
 
---c)For each property in question a), return the following: Using rental payment amount, rental payment frequency, tenant start date and tenant end date to write a query that returns the sum of all payments from start date to end date. 
+--c)i)For each property in question a), return the following: Using rental payment amount, rental payment frequency, tenant start date and tenant end date to write a query that returns the sum of all payments from start date to end date. 
 SELECT 
 	p.PropertyId, 
 	tp.PaymentAmount AS RentalAmount,
@@ -43,6 +43,28 @@ GROUP BY p.PropertyId,
 	tp.StartDate,
 	tp.EndDate
 
+--c) ii) Display the yield. 
+ SELECT 
+	p.PropertyId, 
+	tp.PaymentAmount AS RentalAmount,
+	tpf.name AS Frequency,
+	tp.StartDate,
+	tp.EndDate,
+	SUM(p.Amount) AS Totalrentpaid
+FROM
+[PropertyRentalPayment] AS p
+LEFT JOIN [OwnerProperty] AS o
+ON p.PropertyId = o.PropertyId
+RIGHT JOIN [TenantProperty] AS tp
+ON p.PropertyId = tp.PropertyId
+RIGHT JOIN [TenantPaymentFrequencies] AS tpf
+ON p.FrequencyType = tpf.Id
+WHERE o.OwnerId = '1426'
+GROUP BY p.PropertyId,
+	tp.PaymentAmount,
+	tpf.name,
+	tp.StartDate,
+	tp.EndDate
 
 
 
